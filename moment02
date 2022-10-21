@@ -1,0 +1,116 @@
+# Kacper Strzelecki, TK20
+# Moment02
+
+#Make a choice (1-3) which action you would like to perform
+menu = "1. Exchange the amount the seconds to time in 00h00m00s format \n\
+2. Enchange the amount of hours, mintues and seconds to only seconds: \n\
+3. Compare two chosen times in format hh:mm:ss \n"
+choice = int(input(menu))
+
+#Seconds ---> 00h00m00s
+#If the user chosed the first option by entering 1
+if choice == 1:
+    seconds = int(input("Enter the amount of seconds: "))
+    minutes = 0
+    hours = 0
+    #exchanging seconds to the minutes until the amount of seconds is under 60
+    while seconds >= 60:
+        minutes += 1
+        seconds -= 60
+    #exchanging minutes to hours until the amount of minutes is under 60
+    while minutes >=1 60:
+        hours += 1
+        minutes -= 60
+    print("""
+Seconds:    {0:5}s
+--------------------
+Minutes:    {1:5}m
+--------------------
+Hours:      {2:5}h
+""".format(seconds, minutes, hours))
+    print("Utskrift: " + str(hours).zfill(2) + "h" + str(minutes).zfill(2) + "m" + str(seconds).zfill(2) + "s")
+
+#00h00m00s ---> Seconds
+#If the user chosed the second option by entering 2    
+elif choice == 2:
+    #Entering the hours, minutes and seconds
+    hours = int(input("Enter the amount of hours: "))
+    minutes = int(input("Enter the amount of minutes: "))
+    seconds = int(input("Enter the amount of seconds: "))
+    #Exchanging hours to minutes until the amount of hours is 0.
+    while hours != 0:
+        minutes += 60
+        hours -= 1
+    #Exchanging minutes to seconds until the amount of minutes is 0.
+    while minutes != 0:
+        seconds += 60
+        minutes -= 1
+    
+    print("""
+Seconds:    {0:5}s 
+""".format(seconds))
+
+#Difference of time 1 and time 2
+#If the user chosed the third option by entering 3 
+elif choice == 3:
+    hour3 = 0
+    minute3 = 0
+    second3 = 0
+    #opening menu loop, which allows to change the times if the user entered them wrong. The loop closes when the user confirms the times (by pressing 1)
+    a = 2
+    while a == 2:
+        hour1 = int(input("Enter the hour of first time: "))
+        minute1 = int(input("Enter the minute of first time: "))
+        second1 = int(input("Enter the second of first time: "))
+        hour2 = int(input("Enter the hour of second time: "))
+        minute2 = int(input("Enter the minute of second time: "))
+        second2 = int(input("Enter the second of second time: "))
+        print("Control if the inserted times are correct \n\
+        -------------------------------------------")
+        print("Time 1:      " + str(hour1).zfill(2) + "h" + str(minute1).zfill(2) + "m" + str(second1).zfill(2) + "s")
+        print("Time 2:      " + str(hour2).zfill(2) + "h" + str(minute2).zfill(2) + "m" + str(second2).zfill(2) + "s")
+        menu2 = "Is that correct? \n\
+            1. Yes \n\
+            2. No \n"
+        a = int(input(menu2))
+    
+    #Counting the difference
+    #Decide which time should be subtracted from the other one.
+    #Hours for the time 1 are higher than for the time 2
+    #In that case the time 2 is subtracted from the time 1
+    if hour1 > hour2:
+        #Checking if the seconds for time 1 are higher than time 2. 
+        if second1 > second2:
+            #If yes, subtract
+            second3 = second1 - second2
+        elif second2 > second1:
+            #In that case we need to have higher value for second1, we adding 60 seconds and removing 1 minute.
+            second1 += 60
+            minute1 -= 1
+            second3 = second1-second2
+        #The same as before, but now for minutes instead of seconds
+        if minute1 > minute2:
+            minute3 = minute1 - minute2
+        elif minute2 > minute1:
+            minute1 += 60
+            hour1 -=  1
+            minute3 = minute1 - minute2
+        hour3 = hour1 - hour2
+    #In that case the time 1 is subtracted from the time 2 
+    #See instruktions above (for time1-time2)   
+    elif hour2 > hour1:
+        if second2 > second1:
+            second3 = second2 - second1
+        elif second1 > second2:
+            second2 += 60
+            minute2 -= 1
+            second3 = second2-second1
+        if minute2 > minute1:
+            minute3 = minute2 - minute1
+        elif minute1 > minute2:
+            minute2 += 60
+            hour2 -=  1
+            minute3 = minute2 - minute1
+        hour3 = hour2 - hour1
+
+    print("The difference is:     " + str(hour3).zfill(2) +"h"+ str(minute3).zfill(2) +"m"+ str(second3).zfill(2) +"s")
